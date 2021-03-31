@@ -1,5 +1,8 @@
 extends layout.pug 
 
 block content 
-    each employees in employee 
-        a(href="/hired/" + employees.id)= employees.name
+    .page-container
+        each employees in employee 
+            .employees-container 
+                a.all-name(href="/hired/" + employees.id)= employees.name
+                p.all-about= employees.about

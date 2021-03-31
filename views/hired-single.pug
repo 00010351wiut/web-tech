@@ -1,6 +1,9 @@
 extends layout.pug 
 
 block content 
-    p= employee.hired 
-
-    a(href="/hired/" + employee.id + "/fire") Fire 
+    .single-container 
+        h1.name= employee.name  
+        p.date.detail= employee.date  
+        p.experience.detail= employee.experience  
+        p.about.detail= employee.about  
+        a.hire-btn(href="/hired/" + employee.id + "/fire") Fire 

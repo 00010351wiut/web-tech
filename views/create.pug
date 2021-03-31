@@ -2,13 +2,17 @@ extends layout.pug
 
 block content 
     form(action="/create" method="POST")
+        label Enter your name
         input(type="text" name="name")
 
+        label Enter date of birth
         input(type="datetime-local" name="date")
 
+        label Your experience
         input(type="text" name="experience")
 
-        textarea(name="about", rows="6")     
+        label About yourself
+        textarea(name="about" rows="6")     
 
         input(type="hidden" name="hired" value="false")     
 

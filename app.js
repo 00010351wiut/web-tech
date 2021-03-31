@@ -93,6 +93,34 @@ app.get('/hired', (req, res) => {
     })
 })
 
+app.get('/hired/:id', (req, res) => {
+    const id = req.params.id
+    fs.readFile('./data/hired.json', (err, data) => {
+        if (err) throw err
+        
+        const employees = JSON.parse(data)
+        const employee = employees.filter(employee => employee.hired == "true" && employee.id == id)[0]
+        res.render('hired-single', {employee: employee})
+    })
+})
+
+app.get('/hired/:id/fire', (req, res) => {
+    const id = req.params.id
+    fs.readFile('./data/hired.json', (err, data) => {
+        if (err) throw err
+        
+        const employees = JSON.parse(data)
+        const employee = employees.findIndex(employee => employee.id == id)
+
+        employees[employee].hired = "false"
+
+        fs.writeFile('./data/hired.json', JSON.stringify(employees), err => {
+            if (err) throw err
+        })
+        res.redirect('/employees?fired=1')
+    })
+})
+
 app.get('/api/v1/employees', (req, res) => {
     fs.readFile('./data/hired.json', (err, data) => {
         if (err) throw err

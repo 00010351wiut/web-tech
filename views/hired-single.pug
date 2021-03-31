@@ -1,0 +1,6 @@
+extends layout.pug 
+
+block content 
+    p= employee.hired 
+
+    a(href="/hired/" + employee.id + "/fire") Fire 

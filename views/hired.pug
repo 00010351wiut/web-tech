@@ -2,4 +2,4 @@ extends layout.pug
 
 block content 
     each employees in employee 
-        p= employees.name
+        a(href="/hired/" + employees.id)= employees.name

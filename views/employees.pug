@@ -1,0 +1,8 @@
+extends layout.pug 
+
+block content 
+    ul 
+        each employee in employees 
+            li 
+                p= employee.id
+                a(href="/employees/" + employee.id)= employee.name 

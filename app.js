@@ -42,6 +42,35 @@ app.post('/create', (req, res) => {
     })
 })
 
+app.get('/employees', (req, res) => {
+
+    fs.readFile('./data/hired.json', (err, data) => {
+        if (err) throw err
+        
+        const employees = JSON.parse(data)
+        res.render('employees', {employees: employees})
+    })
+})
+
+app.get('/employees/:id', (req, res) => {
+    const id = req.params.id
+    fs.readFile('./data/hired.json', (err, data) => {
+        if (err) throw err
+        
+        const employees = JSON.parse(data)
+        const employee = employees.filter(employee => employee.id == id)[0]
+        res.render('employee', {employee: employee})
+    })
+})
+
+app.get('/api/v1/employees', (req, res) => {
+    fs.readFile('./data/hired.json', (err, data) => {
+        if (err) throw err
+        
+        const employees = JSON.parse(data)
+        res.json(employees)
+    })
+})
 
 app.listen(3000,  err => {
     if(err) console.log(err)

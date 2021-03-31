@@ -21,6 +21,7 @@ app.post('/create', (req, res) => {
     const date = req.body.date
     const experience = req.body.experience
     const about = req.body.about
+    const hired = req.body.hired
 
     fs.readFile('./data/hired.json', (err, data) => {
         if (err) throw err
@@ -33,6 +34,7 @@ app.post('/create', (req, res) => {
             date: date,
             experience: experience,
             about: about,
+            hired: hired,
         })
 
         fs.writeFile('./data/hired.json', JSON.stringify(employees), err => {
@@ -60,6 +62,34 @@ app.get('/employees/:id', (req, res) => {
         const employees = JSON.parse(data)
         const employee = employees.filter(employee => employee.id == id)[0]
         res.render('employee', {employee: employee})
+    })
+})
+
+app.get('/employees/:id/hire', (req, res) => {
+    const id = req.params.id
+    fs.readFile('./data/hired.json', (err, data) => {
+        if (err) throw err
+        
+        const employees = JSON.parse(data)
+        const employee = employees.findIndex(employee => employee.id == id)
+
+        employees[employee].hired = "true"
+
+        fs.writeFile('./data/hired.json', JSON.stringify(employees), err => {
+            if (err) throw err
+        })
+        res.redirect('/employees?hire=1')
+    })
+})
+
+app.get('/hired', (req, res) => {
+    fs.readFile('./data/hired.json', (err, data) => {
+        if (err) throw err
+        
+        const employees = JSON.parse(data)
+        const employee = employees.filter(employee => employee.hired == "true")
+
+        res.render('hired', {employee: employee})
     })
 })
 
